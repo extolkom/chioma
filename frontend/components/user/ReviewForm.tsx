@@ -28,8 +28,11 @@ export function ReviewForm({ reviewId }: ReviewFormProps) {
 
   useEffect(() => {
     if (review) {
-      setRating(review.rating);
-      setComment(review.comment);
+      const id = setTimeout(() => {
+        setRating(review.rating);
+        setComment(review.comment);
+      }, 0);
+      return () => clearTimeout(id);
     }
   }, [review]);
 
