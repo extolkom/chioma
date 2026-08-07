@@ -25,6 +25,37 @@ interface StepProps {
   errors: Record<string, string>;
 }
 
+const SectionHeader = ({
+  title,
+  step,
+  icon,
+  onEdit,
+}: {
+  title: string;
+  step: number;
+  icon: React.ReactNode;
+  onEdit?: (step: number) => void;
+}) => (
+  <div className="flex items-center justify-between py-4 border-b border-neutral-100 dark:border-neutral-800">
+    <h3 className="text-lg font-bold flex items-center text-neutral-800 dark:text-neutral-200 uppercase tracking-tight">
+      <span className="mr-3 p-2 bg-brand-blue/10 text-brand-blue rounded-lg">
+        {icon}
+      </span>{' '}
+      {title}
+    </h3>
+    <button
+      onClick={() => onEdit?.(step)}
+      className="flex items-center text-xs font-bold text-neutral-400 hover:text-brand-blue transition-colors group"
+    >
+      <Edit2
+        size={12}
+        className="mr-1 group-hover:scale-110 transition-transform"
+      />{' '}
+      Edit
+    </button>
+  </div>
+);
+
 export const Step8Preview: React.FC<StepProps> = ({ data }) => {
   const { draftId, setCurrentStep } = useWizardStore();
   const [isAiLoading, setIsAiLoading] = useState(false);
@@ -52,34 +83,7 @@ export const Step8Preview: React.FC<StepProps> = ({ data }) => {
     fetchScore();
   }, [draftId]);
 
-  const SectionHeader = ({
-    title,
-    step,
-    icon,
-  }: {
-    title: string;
-    step: number;
-    icon: React.ReactNode;
-  }) => (
-    <div className="flex items-center justify-between py-4 border-b border-neutral-100 dark:border-neutral-800">
-      <h3 className="text-lg font-bold flex items-center text-neutral-800 dark:text-neutral-200 uppercase tracking-tight">
-        <span className="mr-3 p-2 bg-brand-blue/10 text-brand-blue rounded-lg">
-          {icon}
-        </span>{' '}
-        {title}
-      </h3>
-      <button
-        onClick={() => setCurrentStep(step)}
-        className="flex items-center text-xs font-bold text-neutral-400 hover:text-brand-blue transition-colors group"
-      >
-        <Edit2
-          size={12}
-          className="mr-1 group-hover:scale-110 transition-transform"
-        />{' '}
-        Edit
-      </button>
-    </div>
-  );
+  // no-op
 
   return (
     <div className="space-y-10 animate-slide-in">
@@ -182,6 +186,7 @@ export const Step8Preview: React.FC<StepProps> = ({ data }) => {
               title="Property Details"
               step={1}
               icon={<Home size={18} />}
+              onEdit={(s) => setCurrentStep(s)}
             />
             <div className="grid grid-cols-2 gap-6 pt-2">
               <div className="flex flex-col">
@@ -224,6 +229,7 @@ export const Step8Preview: React.FC<StepProps> = ({ data }) => {
               title="Lease & Rent"
               step={2}
               icon={<DollarSign size={18} />}
+              onEdit={(s) => setCurrentStep(s)}
             />
             <div className="grid grid-cols-2 gap-6 pt-2">
               <div className="flex flex-col">
@@ -268,6 +274,7 @@ export const Step8Preview: React.FC<StepProps> = ({ data }) => {
             title="Property Description"
             step={6}
             icon={<Presentation size={18} />}
+            onEdit={(s) => setCurrentStep(s)}
           />
           <div className="p-8 bg-neutral-50 dark:bg-neutral-800/50 rounded-3xl border border-neutral-100 dark:border-neutral-700 shadow-sm">
             <p className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 font-medium whitespace-pre-wrap">
@@ -282,6 +289,7 @@ export const Step8Preview: React.FC<StepProps> = ({ data }) => {
             title="Gallery Preview"
             step={5}
             icon={<Search size={18} />}
+            onEdit={(s) => setCurrentStep(s)}
           />
           <div className="flex overflow-x-auto pb-4 gap-4 snap-x pr-4 custom-scrollbar">
             {(data.photos || []).length > 0 ? (
@@ -318,6 +326,7 @@ export const Step8Preview: React.FC<StepProps> = ({ data }) => {
               title="Amenities"
               step={3}
               icon={<List size={18} />}
+              onEdit={(s) => setCurrentStep(s)}
             />
             <div className="flex flex-wrap gap-2 pt-2">
               {data.amenities?.map((a) => (
@@ -336,6 +345,7 @@ export const Step8Preview: React.FC<StepProps> = ({ data }) => {
               title="House Rules"
               step={4}
               icon={<Shield size={18} />}
+              onEdit={(s) => setCurrentStep(s)}
             />
             <div className="flex flex-wrap gap-2 pt-2">
               {Object.entries(data.houseRules || {})

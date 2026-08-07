@@ -39,11 +39,12 @@ export function useTranslation(): UseTranslationResult {
 
   useEffect(() => {
     const detected = detectLocale();
-    setLocaleState(detected);
+    const id = setTimeout(() => setLocaleState(detected), 0);
+    return () => clearTimeout(id);
   }, []);
 
   useEffect(() => {
-    setReady(false);
+    const id = setTimeout(() => setReady(false), 0);
     let cancelled = false;
 
     async function load() {
@@ -70,6 +71,7 @@ export function useTranslation(): UseTranslationResult {
     load();
     return () => {
       cancelled = true;
+      clearTimeout(id);
     };
   }, [locale]);
 

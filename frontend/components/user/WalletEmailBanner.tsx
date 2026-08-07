@@ -22,13 +22,9 @@ export function WalletEmailBanner() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // Deferred to a scheduler tick to keep setState out of the effect body,
-    // matching the sibling onboarding banner.
-    if (!shouldPrompt) {
-      setShow(false);
-      return;
-    }
-    const id = setTimeout(() => setShow(true), 0);
+    // Defer state changes to avoid calling setState synchronously inside the
+    // effect body (reduces cascading render warnings).
+    const id = setTimeout(() => setShow(Boolean(shouldPrompt)), 0);
     return () => clearTimeout(id);
   }, [shouldPrompt]);
 

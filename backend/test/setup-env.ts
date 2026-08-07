@@ -1,6 +1,7 @@
-// CRITICAL: Set DB_TYPE FIRST before any imports or code
+// CRITICAL: Set DB_TYPE and TZ FIRST before any imports or code
 process.env.DB_TYPE = 'postgres';
 process.env.NODE_ENV = 'test';
+process.env.TZ = 'UTC';
 
 // Polyfill global crypto for Jest (TypeORM uses crypto.randomUUID())
 if (typeof globalThis.crypto === 'undefined') {

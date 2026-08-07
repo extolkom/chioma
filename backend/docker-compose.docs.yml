@@ -9,7 +9,7 @@ services:
     container_name: chioma_docs_db
     environment:
       POSTGRES_USER: postgres_cax
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: changeme
       POSTGRES_DB: chioma_db
     ports:
       - '5432:5432'
@@ -45,7 +45,7 @@ services:
       DB_HOST: db
       DB_PORT: '5432'
       DB_USERNAME: postgres_cax
-      DB_PASSWORD: password
+      DB_PASSWORD: changeme
       DB_NAME: chioma_db
       REDIS_HOST: redis
       REDIS_PORT: '6379'
